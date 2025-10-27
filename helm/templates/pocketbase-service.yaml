@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -n pocketbase
+    kompose.version: 1.37.0 (HEAD)
+  labels:
+    io.kompose.service: pocketbase
+  name: pocketbase
+  namespace: {{ .Release.Namespace | default "pocketbase" }}
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    io.kompose.service: pocketbase

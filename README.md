@@ -7,3 +7,13 @@ docker image build pipeline for pocketbase https://github.com/pocketbase/pocketb
 https://pocketbase.io/docs/going-to-production/#using-docker
 
 ## run / install
+
+`docker-compose up`
+
+## helm/kubernetes
+
+cd helm
+
+check the values.yaml and adapt accordingly
+
+`helm install pocketbase . -n pocketbase --create-namespace`

@@ -1,0 +1,14 @@
+# Default values for pocketbase.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+ingress:
+  host: pocketbase.aigentworkforce.com
+  className: cloudflare-tunnel
+
+persistence:
+  type: hostpath
+  # or default for default storage class

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -n pocketbase
+    kompose.version: 1.37.0 (HEAD)
+  labels:
+    io.kompose.service: pocketbase
+  name: pocketbase
+  namespace: {{ .Release.Namespace | default "pocketbase" }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: pocketbase
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -n pocketbase
+        kompose.version: 1.37.0 (HEAD)
+      labels:
+        io.kompose.service: pocketbase
+    spec:
+      containers:
+        - image: guestros/pocketbase:latest
+          name: pocketbase
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /pb/pb_data
+              name: pocketbase
+      restartPolicy: Always
+      volumes:
+        - name: pocketbase
+          persistentVolumeClaim:
+            claimName: pocketbase
+  replicas: {{ .Values.replicaCount }}

@@ -1,0 +1,10 @@
+services:
+  pocketbase:
+    image: guestros/pocketbase:latest
+    build: .
+    ports:
+      - 8080:8080
+    volumes:
+      - pocketbase:/pb/pb_data/
+volumes:
+  pocketbase:

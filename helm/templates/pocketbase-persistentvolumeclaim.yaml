@@ -1,0 +1,40 @@
+{{- if eq .Values.persistence.type "hostpath" }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pocketbase-hostpath-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/hdd/pocketbase
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pocketbase
+  namespace: {{ .Release.Namespace | default "pocketbase" }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pocketbase-hostpath-pv
+{{- else }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: pocketbase
+  name: pocketbase
+  namespace: {{ .Release.Namespace | default "pocketbase" }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+{{- end }}
