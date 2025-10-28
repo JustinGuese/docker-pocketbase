@@ -11,14 +11,14 @@ metadata:
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
-    - host: {{ .Values.ingress.host | default (printf "pb-%s.aigentworkforce.com" (lower (default .Release.Name .Chart.Name))) }}
+    - host: {{ .Values.ingress.host | default (printf "pb-%s.aigentworkforce.com" (lower .Release.Name)) }}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: {{ printf "%s-pocketbase" (lower (default .Release.Name .Chart.Name)) }}
+                name: {{ .Release.Name }}
                 port:
                   number: 8080
 {{- end }}

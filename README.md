@@ -36,7 +36,7 @@ helm upgrade --install pb-myopiagraph . -n pocketbase
 helm upgrade --install pocketbase-documentchat . -n pocketbase --set createNamespace=true --create-namespace
 
 # later installs: leave createNamespace=false (default)
-helm upgrade --install pb-myopiagraph . -n pocketbase
+helm upgrade --install pb-myopiagraph . -n myopiagraph
 ```
 
 If you already hit the Helm ownership error ("invalid ownership metadata; annotation validation error"), you can remove the Helm ownership annotations from the namespace so other releases can be installed:
