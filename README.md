@@ -25,7 +25,7 @@ Recommended workflows
 kubectl create namespace pocketbase
 
 # install releases into the pre-created namespace
-helm upgrade --install pocketbase-documentchat . -n pocketbase
+helm upgrade --install pocketbase-documentchat . -n pocketbase --set createNamespace=true --create-namespace
 helm upgrade --install pb-myopiagraph . -n pocketbase
 ```
 

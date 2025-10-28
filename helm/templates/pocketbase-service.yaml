@@ -1,16 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace | default "pocketbase" }}
   labels:
     app: pocketbase
     release: {{ .Release.Name }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-  name: {{ .Release.Name }}-pocketbase
-  namespace: {{ .Release.Namespace | default "pocketbase" }}
 spec:
   ports:
     - name: "8080"
       port: 8080
       targetPort: 8080
   selector:
+    app: pocketbase
     release: {{ .Release.Name }}

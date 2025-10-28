@@ -1,16 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace | default "pocketbase" }}
   labels:
     app: pocketbase
     release: {{ .Release.Name }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-  name: {{ .Release.Name }}-pocketbase
-  namespace: {{ .Release.Namespace | default "pocketbase" }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
+      app: pocketbase
       release: {{ .Release.Name }}
   strategy:
     type: Recreate
@@ -36,4 +37,3 @@ spec:
           hostPath:
             path: {{ printf "/mnt/hdd/pocketbase/%s" .Release.Name }}
             type: DirectoryOrCreate
-  replicas: {{ .Values.replicaCount }}

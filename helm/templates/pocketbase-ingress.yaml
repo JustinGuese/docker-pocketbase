@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-pocketbase-ingress
+  name: {{ printf "%s-ingress" (lower .Release.Name) }}
   namespace: {{ .Release.Namespace }}
   labels:
     app: pocketbase
@@ -11,14 +11,14 @@ metadata:
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
-    - host: {{ .Values.ingress.host | default (printf "pb-%s.aigentworkforce.com" .Release.Name) }}
+    - host: {{ .Values.ingress.host | default (printf "pb-%s.aigentworkforce.com" (lower (default .Release.Name .Chart.Name))) }}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: {{ .Release.Name }}-pocketbase
+                name: {{ printf "%s-pocketbase" (lower (default .Release.Name .Chart.Name)) }}
                 port:
                   number: 8080
 {{- end }}
