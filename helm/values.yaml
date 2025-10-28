@@ -6,9 +6,11 @@
 replicaCount: 1
 
 ingress:
-  host: pocketbase.aigentworkforce.com
-  className: cloudflare-tunnel
+  enabled: true
+# host: pocketbase.aigentworkforce.com
+# className: cloudflare-tunnel
 
 persistence:
   type: hostpath
-  # or default for default storage class
+  # or default for default storage class. 
+  # hostPath.path: /mnt/hdd/pocketbase/documentchat

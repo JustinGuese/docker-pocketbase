@@ -1,18 +1,29 @@
+{{- if .Values.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: pocketbase-ingress
-  namespace: pocketbase
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  labels:
+    app: {{ .Release.Name }}-pocketbase
+  name: {{ .Release.Name }}-pocketbase-ingress
+  namespace: {{ .Release.Namespace }}
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
+  ingressClassName: nginx
   rules:
-  - host: {{ .Values.ingress.host }}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: pocketbase
-            port:
-              number: 8080
+    - host: {{ .Values.ingress.host | default (printf "%s.api.datafortress.cloud" .Release.Namespace) }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-pocketbase
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host | default (printf "%s.api.datafortress.cloud" .Release.Namespace) }}
+      secretName: {{ .Release.Name }}-pocketbase-tls
+{{- end }}

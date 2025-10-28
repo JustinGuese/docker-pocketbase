@@ -16,4 +16,4 @@ cd helm
 
 check the values.yaml and adapt accordingly
 
-`helm install pocketbase . -n pocketbase --create-namespace`
+`helm upgrade --install pocketbase-documentchat . -n pocketbase --create-namespace`
