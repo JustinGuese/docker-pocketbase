@@ -2,6 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# When true the chart will create a Namespace resource and Helm will
+# annotate it as owned by the release. Default false to allow multiple
+# releases to share a namespace created outside of Helm.
+createNamespace: false
+
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
 

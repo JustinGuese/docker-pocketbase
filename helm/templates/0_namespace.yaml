@@ -1,4 +1,6 @@
+{{- if .Values.createNamespace }}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: pocketbase
+  name: {{ .Release.Namespace | default "pocketbase" }}
+{{- end }}

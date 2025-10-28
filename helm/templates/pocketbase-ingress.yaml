@@ -2,28 +2,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  labels:
-    app: {{ .Release.Name }}-pocketbase
   name: {{ .Release.Name }}-pocketbase-ingress
   namespace: {{ .Release.Namespace }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: cloudflare-tunnel
   rules:
-    - host: {{ .Values.ingress.host | default (printf "pb-%s.api.datafortress.cloud" .Release.Name) }}
+    - host: {{ .Values.ingress.host | default (printf "pb-%s.aigentworkforce.com" .Release.Name) }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Prefix
+            backend:
               service:
                 name: {{ .Release.Name }}-pocketbase
                 port:
                   number: 8080
-            path: /
-            pathType: Prefix
-  tls:
-    - hosts:
-        - {{ .Values.ingress.host | default (printf "pb-%s.api.datafortress.cloud" .Release.Name) }}
-      secretName: {{ .Release.Name }}-pocketbase-tls
 {{- end }}
